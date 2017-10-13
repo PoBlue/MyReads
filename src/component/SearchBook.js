@@ -16,7 +16,11 @@ class SearchBook extends Component {
 
         BooksAPI.search(searchQuery, 10).then((books) => {
             if (books && books.length) {
-                this.setState({ books });
+                let normalizedBooks = books.map((book) => {
+                    book.shelf = book.shelf ? book.shelf : 'none'
+                    return book
+                });
+                this.setState({ "books": normalizedBooks });
             }
         });
     }

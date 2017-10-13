@@ -13,7 +13,8 @@ class BookList extends Component {
     }
 
     render() {
-        const { books } = this.props;
+        const { books, updateBook } = this.props;
+        if (!books) return null;
 
         return(
         <div className="list-books">
@@ -24,14 +25,17 @@ class BookList extends Component {
               <div>
                 <BookShelf
                     books={this.getBookFromShelf(books, BOOK_SHELF.CURRENT_READING)}
+                    updateBook={updateBook}
                     bookShelfName="Current Reading"
                 />
                 <BookShelf
                     books={this.getBookFromShelf(books, BOOK_SHELF.WANT_TO_READ)}
+                    updateBook={updateBook}
                     bookShelfName="Want To Read"
                 />
                 <BookShelf
                     books={this.getBookFromShelf(books, BOOK_SHELF.READ)}
+                    updateBook={updateBook}
                     bookShelfName="Read"
                 />
               </div>

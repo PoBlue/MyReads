@@ -1,35 +1,52 @@
 import React from 'react'
 // import * as BooksAPI from './BooksAPI'
 import './App.css'
-import * as BooksAPI from './BooksAPI';
 
 import BookList from './component/BookList';
 import SearchBook from './component/SearchBook';
 
-
+import * as BooksAPI from './BooksAPI';
 
 class BooksApp extends React.Component {
   state = {
     books: null,
   }
 
-  componentWillMount() {
+  componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({ books: books });
     });
   }
 
+
+  updateBook(bookToUpdate) {
+    const { books } = this.state;
+
+    let updatedBooks = books.map((book) => {
+      if (book.id === bookToUpdate.id) {
+        return bookToUpdate;
+      } else {
+        return book;
+      }
+    });
+
+    BooksAPI.update(bookToUpdate.id, bookToUpdate.shelf).then(
+      this.setState({ books: updatedBooks })
+    );
+  }
+
   render() {
     const { books } = this.state;
-    if (!books) return null;
 
     return (
       <div className="app">
-        {true ? (
-          <SearchBook/>
+        {false ? (
+          <SearchBook />
         ) : (
-          <BookList books={books}/>
-        )}
+            <BookList books={books}
+              updateBook={this.updateBook.bind(this)}
+            />
+          )}
       </div>
     )
   }
