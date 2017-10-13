@@ -9,6 +9,10 @@ import SearchBook from './component/SearchBook';
 
 
 class BooksApp extends React.Component {
+  state = {
+    books: null,
+  }
+
   componentWillMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({ books: books });
@@ -16,12 +20,15 @@ class BooksApp extends React.Component {
   }
 
   render() {
+    const { books } = this.state;
+    if (!books) return null;
+
     return (
       <div className="app">
         {false ? (
-          <SearchBook></SearchBook>
+          <SearchBook/>
         ) : (
-          <BookList></BookList>
+          <BookList books={books}/>
         )}
       </div>
     )
