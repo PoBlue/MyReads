@@ -25,7 +25,7 @@ class BooksApp extends React.Component {
 
     return (
       <div className="app">
-        {false ? (
+        {true ? (
           <SearchBook/>
         ) : (
           <BookList books={books}/>
